@@ -41,11 +41,11 @@ pub fn create_socket(tgt: &str) -> Result<UdpSocket, String> {
         }
     };
 
-    if let Err(e) = socket.set_broadcast(true) {
+    if let Err(_e) = socket.set_broadcast(true) {
         return Err("could not set broadcast on socket".to_string());
     }
 
-    if let Err(e) = socket.connect(tgt) {
+    if let Err(_e) = socket.connect(tgt) {
         return Err(format!("could not connect to {}", tgt));
     }
 
