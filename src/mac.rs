@@ -19,6 +19,6 @@ impl MacAddress {
             }
         }
 
-        return Some(MacAddress { bytes: mac_addr });
+        Some(MacAddress { bytes: mac_addr })
     }
 }

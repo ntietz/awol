@@ -1,16 +1,21 @@
 use awol::mac::MacAddress;
 use awol::wol::{create_socket, WolPacket};
+use std::cmp::Ordering;
 use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 3 {
-        println!("awol: too few arguments");
-        usage_quit();
-    } else if args.len() > 3 {
-        println!("awol: too many arguments");
-        usage_quit();
+    match args.len().cmp(&3) {
+        Ordering::Greater => {
+            println!("awol: too many arguments");
+            usage_quit();
+        }
+        Ordering::Less => {
+            println!("awol: too few arguments");
+            usage_quit();
+        }
+        Ordering::Equal => {}
     }
 
     let mac_addr = match MacAddress::parse(&args[1]) {

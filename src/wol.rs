@@ -2,7 +2,7 @@ use crate::mac::MacAddress;
 use std::net::{SocketAddr, UdpSocket};
 
 pub const WOL_HEADER: [u8; 6] = [255; 6];
-pub const WOL_LENGTH: usize = 6 * 1 + 6 * 16;
+pub const WOL_LENGTH: usize = 6 + 6 * 16;
 
 pub struct WolPacket {
     pub bytes: [u8; WOL_LENGTH],
@@ -14,8 +14,8 @@ impl WolPacket {
             bytes: [0; WOL_LENGTH],
         };
 
-        for idx in 0..6 {
-            packet.bytes[idx] = WOL_HEADER[idx];
+        for (idx, header_byte) in WOL_HEADER.iter().enumerate() {
+            packet.bytes[idx] = *header_byte;
             for rep in 1..17 {
                 packet.bytes[idx + 6 * rep] = mac.bytes[idx];
             }
